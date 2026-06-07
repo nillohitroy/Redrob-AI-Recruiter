@@ -1,0 +1,101 @@
+candidate_id,rank,score,reasoning
+CAND_0049538,1,0.99,"The candidate has a strong background in machine learning and has experience with LlamaIndex, feature engineering, and MLflow."
+CAND_0043860,2,0.9499672301556846,"This candidate has a strong background in machine learning and has experience in pgvector, feature engineering, and object detection."
+CAND_0068932,3,0.9151236915629267,"The candidate has a strong background in marketing and JavaScript, and is proficient in Agile methodologies."
+CAND_0002025,4,0.9149052649921099,"The candidate has a proven track record of developing and implementing diffusion models, FAISS, and TensorFlow, which are essential components of AI engineering."
+CAND_0036184,5,0.9147318438960493,The candidate is a good fit for the recommendation systems engineer position because they have 6.0 years of experience in image classification and have a strong background in QLoRA and FAISS.
+CAND_0020708,6,0.8969059797907981,"The candidate has 4.2 years of experience as a Search Engineer with a strong background in Tally and NLP, and an expertise in data science."
+CAND_0080465,7,0.8876047439806594,"The candidate has 4.2 years of experience as a ML engineer with a focus on Milvus, Haystack, and MLflow."
+CAND_0039754,8,0.8751294524927001,"This candidate has a strong background in applied science and has extensive experience in fine-tuning LLMs, LlamaIndex, and Qdrant."
+CAND_0080534,9,0.8750505968132299,This candidate has a strong background in machine learning and has experience with Elasticsearch and OpenSearch.
+CAND_0035879,10,0.873156626418456,"The AI Research Engineer with 4.5 years of experience is a strong candidate for the role of AI Research Engineer due to their expertise in CI/CD, Vue.js, and statistical modeling."
+CAND_0011687,11,0.8636414724120157,"This candidate has a strong background in natural language processing (NLP), with a proven track record of 7.8 years of experience in developing and deploying machine learning models using TensorFlow and OpenSearch."
+CAND_0046132,12,0.8625682983859446,"Kubeflow is a popular machine learning framework for building and deploying deep learning models. Data science is a critical skill in AI research, and OpenCV is a powerful tool for image processing and computer"
+CAND_0032527,13,0.8568760320289095,The candidate has a strong background in machine learning and has experience with Apache Flink and deep learning.
+CAND_0099806,14,0.8486285070076428,"The candidate has a strong background in artificial intelligence and has worked in the field for 4.6 years. They have a strong foundation in LoRA, OpenCV, and statistical modeling, which makes"
+CAND_0079550,15,0.8472830389884092,Kubeflow is a machine learning algorithm that is well-suited to tasks such as information retrieval and natural language processing.
+CAND_0004402,16,0.8461899969328147,"The AI Research Engineer with 6.0 years of experience is a strong candidate for the position as they have a strong background in TypeScript, TTS, and OpenSearch."
+CAND_0078042,17,0.8413080860696445,"The candidate is a good fit because they have 4.7 years of experience in applied machine learning, have strong skills in open-source search algorithms such as OpenSearch, and have a strong background in"
+CAND_0008295,18,0.8388157362438207,The candidate has a strong background in machine learning and has experience working with Kubernetes and Python.
+CAND_0096209,19,0.8366268336079503,"The candidate has a strong background in machine learning and has experience in using Snowflake, Image Classification, and Redis."
+CAND_0061339,20,0.8315505164872531,"The candidate has a proven track record of expertise in information retrieval and YOLO, and has experience using data pipelines to extract valuable insights from large datasets."
+CAND_0026942,21,0.8275266356920932,The candidate has a strong background in machine learning and has experience with learning to rank and using CNN.
+CAND_0079387,22,0.8178393703141329,The candidate has 6.9 years of experience as an AI engineer with a focus on scikit-learn and recommendation systems.
+CAND_0030031,23,0.8135236279280904,"The candidate is a good fit for the AI Engineer role due to their 5.7-year experience in information retrieval, PyTorch, and object detection."
+CAND_0037944,24,0.8062043027755641,"The candidate has a strong background in data science with 4.9 years of experience in Next.js and vector search, making them a strong fit for a senior data scientist role."
+CAND_0098454,25,0.8040710551312695,"The candidate has a strong background in vector search and machine learning, with a 6.6-year track record of experience in both."
+CAND_0028527,26,0.8040708732909676,"The candidate has a strong background in artificial intelligence and has experience in programming languages such as LangChain and Qdrant, as well as using open-source software like OpenCV."
+CAND_0087744,27,0.8035555457810716,"This candidate is a strong candidate for the Senior Software Engineer position due to their extensive experience in speech recognition and accounting, as well as their strong background in LangChain."
+CAND_0060054,28,0.8014706834693215,"The candidate has a strong background in AI engineering with 6.4 years of experience, and they have a strong focus on diffusion models and TensorFlow."
+CAND_0094165,29,0.8008406621654348,The candidate has a strong background in AI research and has experience working on projects with object detection and Hadoop.
+CAND_0080291,30,0.8005615373017952,Kubeflow is a popular machine learning framework that allows for efficient and scalable deployment of models. MongoDB is a popular NoSQL database that is widely used for storing and retrieving data. Feature engineering is
+CAND_0086893,31,0.7993579363425574,The candidate has a strong background in machine learning and has experience working with Hugging Face Transformers and Weights  & Biases.
+CAND_0010685,32,0.7991505751494252,The candidate has a strong background in natural language processing and is well-versed in using these skills to develop and implement advanced machine learning models.
+CAND_0033179,33,0.7985277167722196,"AI Research Engineer with 6.9 years of experience in FastAPI, Weights  & Biases, and Hugging Face Transformers."
+CAND_0045887,34,0.7978411245550616,"This candidate is a strong candidate for the Data Scientist role due to their extensive experience in fine-tuning LLMs, embedding, and computer vision."
+CAND_0040887,35,0.7937039995493633,"The candidate has a strong background in machine learning and has experience with reinforcement learning and computer vision, making them a good fit for a role in the field."
+CAND_0053591,36,0.7928662454656403,"The candidate has 5.3 years of experience as an AI engineer and has a strong background in LangChain, Reinforcement Learning, and Embeddings."
+CAND_0036437,37,0.7911649080692043,"The candidate has 4.8 years of experience as a search engineer and has a strong track record of going, Kubeflow, and OpenSearch."
+CAND_0091534,38,0.7867568935890237,"The candidate has a strong background in machine learning and has experience with several cutting-edge technologies, including Hugging Face Transformers and scikit-learn."
+CAND_0050876,39,0.7860786846050951,"The candidate has a strong background in applied machine learning, with 6 years of experience in SQL, Qdrant, and MLOps."
+CAND_0018888,40,0.7832978008659163,"The candidate has a strong background in AI research and has experience working on diffusion models, GANs, and MLflow."
+CAND_0077337,41,0.7770317658977373,"The candidate is a strong and experienced Staff Machine Learning Engineer with a proven track record of developing and implementing GANs, Semantic Search, and QLoRA models."
+CAND_0049540,42,0.7720187924509523,"This candidate has a strong background in machine learning, with a 6.8-year track record of working with Google Cloud Platform (GCP) and YOLO, and proficiency in TensorFlow."
+CAND_0054318,43,0.7708855636886061,"The AI Research Engineer with 3.5 years of experience is a strong candidate for the role of AI Research Engineer due to their expertise in diffusion models, speech recognition, and Scrum."
+CAND_0093912,44,0.7698393573699387,"The candidate has a proven track record of developing and implementing innovative data science solutions, including using SAP to extract insights from complex data sets, and using CNN to improve the accuracy of image classification models."
+CAND_0070525,45,0.7688579534006499,The candidate has a strong background in machine learning and has experience with Apache Beam and recommendation systems.
+CAND_0052328,46,0.7654393438630482,"The candidate is a good fit for the recommendation systems engineer role because they have 6.5 years of experience in object detection, open-source search, and have a strong foundation in object detection and open"
+CAND_0045250,47,0.7646312613729591,The candidate has a strong background in machine learning and has experience working with applied machine learning techniques such as Transformers and Milvus.
+CAND_0051615,48,0.7628816414232797,"The candidate has 4.6 years of experience as a Search Engineer and has a strong background in RAG, HTML, and Data Science."
+CAND_0099401,49,0.7620845591933596,The candidate has a strong background in natural language processing and has experience working as a NLP engineer for 7.7 years.
+CAND_0025640,50,0.7602708890519146,"The candidate has a strong background in semantic search and PEFT, and is skilled in information retrieval."
+CAND_0022274,51,0.7581643980221511,The candidate has 4.5 years of experience in AI research and has a strong background in Vue.js and time series.
+CAND_0089381,52,0.7578522509596599,The candidate has a strong background in computer vision and has experience with PyTorch and speech recognition.
+CAND_0052682,53,0.7574451540069314,The candidate has a strong background in natural language processing and has experience with statistical modeling and QLORA.
+CAND_0011643,54,0.7556508487795492,"The AI Research Engineer with 4.2 years of experience is a skilled Pinecone, Illustrator, and Image Classification professional with a strong background in the field."
+CAND_0018499,55,0.7548298793463152,The candidate has a strong background in machine learning and has experience in deep learning and weaviate recommendation systems.
+CAND_0017178,56,0.7538383717764178,"The candidate has 4.2 years of experience as a ML Engineer and has a strong background in PEFT, Haystack, and pgvector."
+CAND_0064256,57,0.7518465599143594,This candidate has a proven track record of working with microservices and using PyTorch and MLOps to build and deploy scalable and efficient systems.
+CAND_0024878,58,0.7488987981675534,"The AI specialist has 5.7 years of experience in machine learning and has a strong background in BM25, pgvector, and Databricks."
+CAND_0009516,59,0.7448679718634659,"The candidate is a good fit for the AI specialist role as they have 6.9 years of experience in Pinecone, BentoML, and AWS."
+CAND_0083852,60,0.7440923043837411,"The candidate has a strong background in data science with a 6.0-year track record of experience in Qdrant, Kubeflow, and QLoRA."
+CAND_0015967,61,0.7403772437641548,"The candidate is a strong candidate for the Senior Software Engineer position due to their extensive experience in QLoRA, YOLO, and Pinecone, as well as their strong skills in these areas."
+CAND_0075249,62,0.7402275022284707,"The candidate has 6.2 years of experience as an Applied ML Engineer, and they have a strong background in Sentence Transformers and Milvus, which are both popular machine learning techniques."
+CAND_0052431,63,0.7392137188262679,"The candidate has a strong background in machine learning and has experience in Six Sigma and Tailwind, as well as Semantic Search."
+CAND_0081053,64,0.7383691813086687,The candidate has a strong background in natural language processing and has experience in both LoRA and QLoRA.
+CAND_0062247,65,0.7380744339912534,The candidate has a strong background in image classification and has experience with OpenCV and reinforcement learning.
+CAND_0055905,66,0.7371870375050722,"The candidate has a proven track record of developing and implementing machine learning models in a variety of industries, including healthcare, finance, and retail. They have expertise in Elasticsearch, as well as experience with deep"
+CAND_0044883,67,0.7338852287371341,"The candidate has a strong background in AI engineering with a 6.3-year track record of experience in CNN, BM25, and computer vision."
+CAND_0037160,68,0.7329356270554531,"The candidate has a strong background in data science with a 6.0-year track record of experience in TTS, deep learning, and language models."
+CAND_0061265,69,0.7285767031319449,荐系统工程师具有6.6年的经验，擅长使用Qdrant和SQL进行数据挖掘，并且精通会计知识。
+CAND_0076163,70,0.7270428469785724,"The candidate is a strong candidate for the NLP Engineer role due to their extensive experience in Weaviate, LangChain, and YOLO, which demonstrates their expertise in natural language processing."
+CAND_0052030,71,0.7267011640198745,"The candidate is a strong candidate for the Senior Software Engineer position at Milvus, as they have 4.1 years of experience in the field of software engineering and have a strong background in Mil"
+CAND_0043450,72,0.7254681214626418,"The candidate has 3.3 years of experience as an AI Research Engineer, with a strong focus on forecasting and advanced machine learning techniques."
+CAND_0042506,73,0.7249192368702864,"The candidate has a proven track record of working as a Search Engineer with a 4.2-year track record, and they possess strong skills inPEFT, TTS, and scikit-learn"
+CAND_0029294,74,0.7244817132913653,"The candidate has a strong background in machine learning and has 4.0 years of experience in the field. They have a strong foundation in BM25, which is a popular machine learning algorithm,"
+CAND_0013536,75,0.7235604945090035,"The candidate has a proven track record of applying machine learning expertise to complex projects, with a 14.1-year track record of experience in PyTorch, Prompt Engineering, and LLMs"
+CAND_0060340,76,0.7228668959418838,"The candidate has a strong background in computer vision and has experience working with SQL, RAG, and NLP."
+CAND_0077498,77,0.7216759411491064,"The candidate has a strong background in data science and speech recognition, and is particularly skilled in using OpenCV."
+CAND_0001218,78,0.7201689356928561,The candidate has a strong background in artificial intelligence and has experience working with both ASR and pgvector techniques.
+CAND_0052360,79,0.719880521161612,"The candidate has a strong background in machine learning and has experience working with diffusion models, Redux, and weights and biases."
+CAND_0031752,80,0.7161950744211287,The candidate has a strong background in machine learning and has 5 years of experience in object detection and feature extraction.
+CAND_0037000,81,0.7139011376643571,"The candidate has 2.7 years of experience as a Search Engineer, with a focus on Embeddings, LangChain, and TTS."
+CAND_0088335,82,0.7127145901630111,"The AI Research Engineer with 6.4 years of experience is a skilled and experienced candidate with a strong background in Hugging Face Transformers and Flask, and a passion for data science."
+CAND_0043829,83,0.7108741147485824,The candidate has 4.8 years of experience in machine learning and has a strong background in Qdrant.
+CAND_0042029,84,0.7099782889222337,The candidate has a strong background in machine learning and has a proven track record of success in developing and implementing cutting-edge algorithms.
+CAND_0068811,85,0.7096005354599849,"The candidate has a strong background in applied machine learning, with 8 years of experience in data science and vector search."
+CAND_0050454,86,0.7084236334007473,"The candidate has a proven track record of developing cutting-edge AI technologies, including PyTorch, LangChain, and QLoRA, which demonstrates their expertise in the field."
+CAND_0095858,87,0.7083021957033814,"The AI Research Engineer with 4.3 years of experience is a strong candidate for the position as they have a strong background in LLMs, Snowflake, and recommendation systems."
+CAND_0005260,88,0.7082495410767892,"The candidate has a strong background in NLP and has a proven track record of developing and implementing statistical models, MLOps, and Snowflake."
+CAND_0061352,89,0.7079714475998429,Kubeflow and Weaviate are two cutting-edge machine learning tools that the candidate has experience using in their previous role as an ML Engineer.
+CAND_0064270,90,0.7075770482032251,"The candidate has a strong background in applied machine learning, with a 4.2-year track record of working with LlamaIndex, BentoML, and PyTorch."
+CAND_0018722,91,0.7068275499147949,"The candidate is a strong candidate for the Recommendation Systems Engineer position due to their extensive experience in data science and Weaviate, as well as their strong Python programming skills."
+CAND_0010603,92,0.706076644340549,"The candidate has 5.3 years of experience in information retrieval and TTS, and they have strong skills in open-source technologies such as OpenSearch."
+CAND_0038656,93,0.7060412091999503,The candidate has a strong background in machine learning and has experience working with weights and biases in deep learning models.
+CAND_0065195,94,0.7041108558022381,"The candidate has a proven track record of working as a Search Engineer with a 5.1-year track record, and they possess strong skills in LLMs, BentoML, and QLo"
+CAND_0082086,95,0.7028162477248767,"The candidate is a senior software engineer with 6.0 years of experience in feature engineering and FAISS, and has strong skills in speech recognition."
+CAND_0095619,96,0.7006229374382067,The NLP engineer with 15.6 years of experience has a strong background in feature engineering and has expertise in Pinecone and MLflow.
+CAND_0005311,97,0.7005391960260647,"The candidate has a strong background in artificial intelligence research and has experience in using LoRA, feature engineering, and BentoML."
+CAND_0061655,98,0.7005036185756647,"The candidate has a strong background in machine learning and has experience working with Haystack, Pinecone, and other machine learning tools."
+CAND_0081852,99,0.7003069148054522,This candidate has a strong background in data science and has experience with Salesforce CRM and Semantic Search.
+CAND_0051004,100,0.7,"This candidate is a strong candidate for the Senior Data Scientist position due to their 4.7-year experience in MLflow and Embeddings, as well as their strong skills in Semantic Search."
