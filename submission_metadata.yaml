@@ -1,0 +1,68 @@
+# ============================================================================
+# Team identity
+# ============================================================================
+team_name: "TGB"  
+
+primary_contact:
+  name: "Nillohit Roy"
+  email: "nillohitroy3@gmail.com"   
+  phone: "+91-6291192906"        
+
+team_members:
+  - name: "Nillohit Roy"
+    email: "nillohitroy3@gmail.com"
+    role: "Team Lead"          
+
+# ============================================================================
+# Code and reproducibility
+# ============================================================================
+github_repo: "https://github.com/nillohitroy/Redrob-AI-Recruiter"
+
+sandbox_link: "https://huggingface.co/spaces/nillohitroy/redrob-ai-ranker"
+
+reproduce_command: "cd src && python rank.py --candidates ../dataset/candidates.jsonl --out ./submission.csv"
+
+# ============================================================================
+# Compute environment
+# ============================================================================
+compute:
+  platform: "HF Spaces"                   
+  cpu_cores: 4                                  
+  ram_gb: 16                                   
+  python_version: "3.10.12"                       
+  os: "Ubuntu 22.04 LTS"                               
+  uses_gpu_for_inference: false         
+  has_network_during_ranking: false     
+  pre_computation_required: true
+  pre_computation_time_minutes: 90
+
+# ============================================================================
+# AI tools declaration
+# ============================================================================
+ai_tools_used:
+  - "Gemini"        
+
+ai_usage_summary: |
+  Used Gemini as an interactive architectural guide and pair-programmer to design the Two-Stage Cascade ranking pipeline.
+  
+# ============================================================================
+# Approach summary
+# ============================================================================
+methodology_summary: |
+  A highly optimized Two-Stage Cascade Ranker. 
+  
+  Phase 1: All 100K profiles were embedded using sentence-transformers (all-MiniLM-L6-v2) into a FAISS index, alongside pre-computed behavioral multipliers and honeypot flags. 
+  
+  Phase 2: The pipeline vectorizes the JD, instantly queries FAISS for the top 2000 semantic matches, and applies the behavioral multipliers. It then parses the JSON for only those 2000 candidates to apply strict regex disqualifiers for pure-consultancy or pure-research backgrounds. 
+  
+  Phase 3: Deployed a quantized Qwen1.5-0.5B-Chat via llama-cpp natively on the CPU to generate grounded, 1-sentence justifications based purely on extracted JSON facts for the final Top 100.
+
+# ============================================================================
+# Declarations
+# ============================================================================
+declarations:
+  read_submission_spec: true        
+  code_is_original_work: true       
+  no_collusion: true                
+  honeypot_check_done: true
+  reproduction_tested: true
