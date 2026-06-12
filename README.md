@@ -35,7 +35,6 @@ When `rank.py` is executed, it runs entirely locally on CPU:
 * `candidate_metadata.csv` — Pre-calculated behavioral multipliers and honeypot flags.
 
 ### Dataset & Hackathon Context Files
-*(Note: Large dataset files are ignored in `.gitignore` and must be placed in the project root locally).*
 * `candidates.jsonl` — The primary 100K candidate dataset (must be unzipped).
 * `sample_candidates.json` — A 50-candidate subset for rapid sandbox testing.
 * `candidate_schema.json` — JSON schema definitions for the candidate records.
