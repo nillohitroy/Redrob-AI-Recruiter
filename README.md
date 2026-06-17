@@ -30,6 +30,9 @@ When `rank.py` is executed, it runs entirely locally on CPU:
 * `requirements.txt` — Dependency list, including the pre-compiled CPU wheel for `llama-cpp-python`.
 * `.streamlit/config.toml` — Sandbox configuration to bypass default upload limits and XSRF blocks.
 
+### Pre-Computation Scripts
+* `Redrob_Phase1_Precompute.ipynb` — It processes the raw dataset of candidates, computes the `sentence-transformers` embeddings, calculates the behavioral multipliers, explicitly flags honeypots, and generates the finalized FAISS index and metadata CSV artifacts.
+
 ### Pre-Computed Artifacts (Requires Git LFS)
 * `candidate_index.faiss` — The offline vector index containing 100,000 candidate embeddings.
 * `candidate_metadata.csv` — Pre-calculated behavioral multipliers and honeypot flags.
