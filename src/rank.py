@@ -13,7 +13,7 @@ def run_pipeline(candidates_path, output_path):
     start_time = time.time()
     print("Initiating Redrob AI Ranker Pipeline...")
 
-    # --- 1. LOAD ARTIFACTS ---
+    # 1. LOAD ARTIFACTS
     base_dir = os.path.dirname(os.path.abspath(__file__))
     INDEX_PATH = os.path.join(base_dir, 'candidate_index.faiss')
     META_PATH = os.path.join(base_dir, 'candidate_metadata.csv')
@@ -24,7 +24,7 @@ def run_pipeline(candidates_path, output_path):
     index = faiss.read_index(INDEX_PATH)
     metadata_df = pd.read_csv(META_PATH)
 
-    # --- 2. EXTRACT UPLOADED CANDIDATES FIRST ---
+    # 2. EXTRACT UPLOADED CANDIDATES FIRST
     candidate_details = {}
     print("Parsing candidate file...")
     
@@ -35,7 +35,6 @@ def run_pipeline(candidates_path, output_path):
         profile = cand.get('profile', {})
         skills = [s.get('name', '') for s in cand.get('skills', []) if isinstance(s, dict)]
         
-        # Safely extract experience to prevent type errors
         try:
             exp = float(profile.get('years_of_experience', 0))
         except (ValueError, TypeError):
@@ -70,7 +69,7 @@ def run_pipeline(candidates_path, output_path):
     if not uploaded_ids:
         raise ValueError("No valid candidates found in the input file.")
 
-    # --- 3. VECTORIZE JOB DESCRIPTION ---
+    # 3. VECTORIZE JOB DESCRIPTION
     jd_text = """
     Senior AI Engineer. Deep technical depth in modern ML systems: embeddings, retrieval, ranking, LLMs, fine-tuning. 
     Production experience with embeddings-based retrieval systems (sentence-transformers, BGE).
@@ -81,21 +80,21 @@ def run_pipeline(candidates_path, output_path):
     jd_vector = embed_model.encode([jd_text]).astype('float32')
     faiss.normalize_L2(jd_vector)
 
-    # --- 4. SEMANTIC RECALL (Filtered by Uploaded File) ---
+    # 4. SEMANTIC RECALL (Filtered by Uploaded File)
     RECALL_K = len(metadata_df)
     distances, indices = index.search(jd_vector, RECALL_K)
     
     recall_df = metadata_df.iloc[indices[0]].copy()
     recall_df['semantic_score'] = distances[0]
     
-    # Filter immediately to only the candidates in the uploaded file
+    # Filter only the candidates
     recall_df = recall_df[recall_df['candidate_id'].isin(uploaded_ids)].copy()
 
     # Apply Behavioral Math and drop honeypots
     recall_df['composite_score'] = recall_df['semantic_score'] * recall_df['behavioral_multiplier']
     recall_df = recall_df[recall_df['is_honeypot_flag'] == 0]
 
-    # --- 5. HARD DISQUALIFICATIONS ---
+    # 5. HARD DISQUALIFICATIONS
     CONSULTANCIES = {'tcs', 'infosys', 'wipro', 'accenture', 'cognizant', 'capgemini'}
     RESEARCH_TERMS = {'lab', 'university', 'research', 'academic', 'institute'}
 
@@ -106,14 +105,14 @@ def run_pipeline(candidates_path, output_path):
         if all(any(res in comp for res in RESEARCH_TERMS) for comp in companies): return True
         return False
 
-    # Apply disqualifications to the ENTIRE valid pool before cutting off the top N
+    # Apply disqualifications
     recall_df['is_disqualified'] = recall_df['candidate_id'].apply(is_disqualified)
     final_pool = recall_df[recall_df['is_disqualified'] == False].copy()
 
     # Sort and handle deterministic tie-breaking
     final_pool = final_pool.sort_values(by=['composite_score', 'candidate_id'], ascending=[False, True])
     
-    # Isolate top 100 (If the dataset has less than 100, it simply returns what it has)
+    # Isolate top 100
     top_100 = final_pool.head(100).copy()
 
     # Normalize scores 0.70 to 0.99
@@ -125,7 +124,7 @@ def run_pipeline(candidates_path, output_path):
     
     top_100['rank'] = range(1, len(top_100) + 1)
 
-    # --- 6. REASONING GENERATION ---
+    # 6. REASONING GENERATION
     print("Loading LLM for Reasoning Generation...")
     model_path = hf_hub_download(repo_id="Qwen/Qwen1.5-0.5B-Chat-GGUF", filename="qwen1_5-0_5b-chat-q4_k_m.gguf")
     llm = Llama(model_path=model_path, n_ctx=512, n_threads=4, verbose=False)
@@ -146,13 +145,10 @@ Skills: {facts['skills']}
 <|im_end|>
 <|im_start|>assistant
 This candidate is a strong fit because they have"""
-
-        # REMOVED '.' from stop tokens to allow float experience numbers (e.g. 4.5)
-        # Increased max_tokens to 45 so it does not cut off mid-sentence
+        
         output = llm(prompt, max_tokens=45, temperature=0.1, stop=["<|im_end|>", "\n"])
         raw_text = output['choices'][0]['text'].strip()
         
-        # Safety fallback
         if len(raw_text) > 10:
             final_reasoning = f"This candidate is a strong fit because they have {raw_text}"
             if not final_reasoning.endswith('.'):
@@ -164,11 +160,10 @@ This candidate is a strong fit because they have"""
 
     top_100['reasoning'] = reasonings
 
-    # --- 7. FORMAT & EXPORT ---
+    # 7. FORMAT & EXPORT
     submission_df = top_100[['candidate_id', 'rank', 'composite_score', 'reasoning']].copy()
     submission_df.rename(columns={'composite_score': 'score'}, inplace=True)
     
-    # Ensure directory exists
     os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
     submission_df.to_csv(output_path, index=False)
     
