@@ -24,7 +24,53 @@ def run_pipeline(candidates_path, output_path):
     index = faiss.read_index(INDEX_PATH)
     metadata_df = pd.read_csv(META_PATH)
 
-    # --- 2. VECTORIZE JOB DESCRIPTION ---
+    # --- 2. EXTRACT UPLOADED CANDIDATES FIRST ---
+    candidate_details = {}
+    print("Parsing candidate file...")
+    
+    def extract_cand(cand):
+        c_id = cand.get('candidate_id')
+        if not c_id: return
+        history = cand.get('career_history', [])
+        profile = cand.get('profile', {})
+        skills = [s.get('name', '') for s in cand.get('skills', []) if isinstance(s, dict)]
+        
+        # Safely extract experience to prevent type errors
+        try:
+            exp = float(profile.get('years_of_experience', 0))
+        except (ValueError, TypeError):
+            exp = 0.0
+            
+        candidate_details[c_id] = {
+            "companies": [h.get('company', '').lower() for h in history if h.get('company')],
+            "title": profile.get('current_title', 'Engineer') or 'Engineer',
+            "experience": exp,
+            "skills": ", ".join(skills[:3]) if skills else "relevant technical tools"
+        }
+
+    try:
+        with open(candidates_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+            if isinstance(data, list):
+                for cand in data:
+                    extract_cand(cand)
+    except json.JSONDecodeError:
+        with open(candidates_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    cand = json.loads(line)
+                    extract_cand(cand)
+                except json.JSONDecodeError:
+                    pass
+
+    uploaded_ids = set(candidate_details.keys())
+    if not uploaded_ids:
+        raise ValueError("No valid candidates found in the input file.")
+
+    # --- 3. VECTORIZE JOB DESCRIPTION ---
     jd_text = """
     Senior AI Engineer. Deep technical depth in modern ML systems: embeddings, retrieval, ranking, LLMs, fine-tuning. 
     Production experience with embeddings-based retrieval systems (sentence-transformers, BGE).
@@ -35,56 +81,21 @@ def run_pipeline(candidates_path, output_path):
     jd_vector = embed_model.encode([jd_text]).astype('float32')
     faiss.normalize_L2(jd_vector)
 
-    # --- 3. SEMANTIC RECALL ---
-    RECALL_K = min(2000, len(metadata_df))
+    # --- 4. SEMANTIC RECALL (Filtered by Uploaded File) ---
+    RECALL_K = len(metadata_df)
     distances, indices = index.search(jd_vector, RECALL_K)
     
     recall_df = metadata_df.iloc[indices[0]].copy()
     recall_df['semantic_score'] = distances[0]
-    recall_df['composite_score'] = recall_df['semantic_score'] * recall_df['behavioral_multiplier']
     
-    # Drop known honeypots flagged
+    # Filter immediately to only the candidates in the uploaded file
+    recall_df = recall_df[recall_df['candidate_id'].isin(uploaded_ids)].copy()
+
+    # Apply Behavioral Math and drop honeypots
+    recall_df['composite_score'] = recall_df['semantic_score'] * recall_df['behavioral_multiplier']
     recall_df = recall_df[recall_df['is_honeypot_flag'] == 0]
 
-    # --- 4. HARD DISQUALIFICATIONS ---
-    candidate_ids_to_check = set(recall_df['candidate_id'].tolist())
-    candidate_details = {}
-    
-    try:
-        with open(candidates_path, 'r', encoding='utf-8') as file:
-            data = json.load(file)
-            if isinstance(data, list):
-                for cand in data:
-                    c_id = cand.get('candidate_id')
-                    if c_id in candidate_ids_to_check:
-                        history = cand.get('career_history', [])
-                        profile = cand.get('profile', {})
-                        skills = [s.get('name', '') for s in cand.get('skills', []) if isinstance(s, dict)]
-                        candidate_details[c_id] = {
-                            "companies": [h.get('company', '').lower() for h in history],
-                            "title": profile.get('current_title', 'Unknown'),
-                            "experience": profile.get('years_of_experience', 0),
-                            "skills": ", ".join(skills[:3])
-                        }
-    except json.JSONDecodeError:
-        with open(candidates_path, 'r', encoding='utf-8') as file:
-            for line in file:
-                line = line.strip()
-                if not line:
-                    continue
-                cand = json.loads(line)
-                c_id = cand.get('candidate_id')
-                if c_id in candidate_ids_to_check:
-                    history = cand.get('career_history', [])
-                    profile = cand.get('profile', {})
-                    skills = [s.get('name', '') for s in cand.get('skills', []) if isinstance(s, dict)]
-                    candidate_details[c_id] = {
-                        "companies": [h.get('company', '').lower() for h in history],
-                        "title": profile.get('current_title', 'Unknown'),
-                        "experience": profile.get('years_of_experience', 0),
-                        "skills": ", ".join(skills[:3])
-                    }
-
+    # --- 5. HARD DISQUALIFICATIONS ---
     CONSULTANCIES = {'tcs', 'infosys', 'wipro', 'accenture', 'cognizant', 'capgemini'}
     RESEARCH_TERMS = {'lab', 'university', 'research', 'academic', 'institute'}
 
@@ -95,13 +106,14 @@ def run_pipeline(candidates_path, output_path):
         if all(any(res in comp for res in RESEARCH_TERMS) for comp in companies): return True
         return False
 
+    # Apply disqualifications to the ENTIRE valid pool before cutting off the top N
     recall_df['is_disqualified'] = recall_df['candidate_id'].apply(is_disqualified)
     final_pool = recall_df[recall_df['is_disqualified'] == False].copy()
 
     # Sort and handle deterministic tie-breaking
     final_pool = final_pool.sort_values(by=['composite_score', 'candidate_id'], ascending=[False, True])
     
-    # Isolate top 100
+    # Isolate top 100 (If the dataset has less than 100, it simply returns what it has)
     top_100 = final_pool.head(100).copy()
 
     # Normalize scores 0.70 to 0.99
@@ -109,12 +121,11 @@ def run_pipeline(candidates_path, output_path):
     if max_score > min_score:
         top_100['composite_score'] = ((top_100['composite_score'] - min_score) / (max_score - min_score)) * 0.29 + 0.70
     elif max_score == min_score and not top_100.empty:
-        # Fallback if all scores are identical
         top_100['composite_score'] = 0.85
     
     top_100['rank'] = range(1, len(top_100) + 1)
 
-    # --- 5. REASONING GENERATION ---
+    # --- 6. REASONING GENERATION ---
     print("Loading LLM for Reasoning Generation...")
     model_path = hf_hub_download(repo_id="Qwen/Qwen1.5-0.5B-Chat-GGUF", filename="qwen1_5-0_5b-chat-q4_k_m.gguf")
     llm = Llama(model_path=model_path, n_ctx=512, n_threads=4, verbose=False)
@@ -122,22 +133,38 @@ def run_pipeline(candidates_path, output_path):
     reasonings = []
     for _, row in top_100.iterrows():
         c_id = row['candidate_id']
-        facts = candidate_details.get(c_id, {"title": "Engineer", "experience": 5, "skills": "AI"})
+        facts = candidate_details[c_id]
         
+        # Pre-fill Prompting
         prompt = f"""<|im_start|>system
-You are a technical recruiter. Write exactly one short sentence explaining why this candidate is a good fit. Use ONLY the provided facts. Do not hallucinate.
+You are a technical recruiter. Write exactly one professional sentence explaining why the candidate is a fit. Use ONLY the provided facts. Do not hallucinate.
 <|im_end|>
 <|im_start|>user
-Facts: Title: {facts['title']}, Experience: {facts['experience']} years, Key Skills: {facts['skills']}.
+Title: {facts['title']}
+Experience: {facts['experience']} years
+Skills: {facts['skills']}
 <|im_end|>
 <|im_start|>assistant
-"""
-        output = llm(prompt, max_tokens=40, temperature=0.3, stop=["<|im_end|>"])
-        reasonings.append(output['choices'][0]['text'].strip().replace("\n", " "))
+This candidate is a strong fit because they have"""
+
+        # REMOVED '.' from stop tokens to allow float experience numbers (e.g. 4.5)
+        # Increased max_tokens to 45 so it does not cut off mid-sentence
+        output = llm(prompt, max_tokens=45, temperature=0.1, stop=["<|im_end|>", "\n"])
+        raw_text = output['choices'][0]['text'].strip()
+        
+        # Safety fallback
+        if len(raw_text) > 10:
+            final_reasoning = f"This candidate is a strong fit because they have {raw_text}"
+            if not final_reasoning.endswith('.'):
+                final_reasoning += '.'
+        else:
+            final_reasoning = f"This candidate is a strong fit because they have {facts['experience']} years of experience as a {facts['title']} with key skills in {facts['skills']}."
+            
+        reasonings.append(final_reasoning)
 
     top_100['reasoning'] = reasonings
 
-    # --- 6. FORMAT & EXPORT ---
+    # --- 7. FORMAT & EXPORT ---
     submission_df = top_100[['candidate_id', 'rank', 'composite_score', 'reasoning']].copy()
     submission_df.rename(columns={'composite_score': 'score'}, inplace=True)
     
